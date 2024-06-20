@@ -1,8 +1,5 @@
 plugins {
     alias(libs.plugins.androidApplication)
-//    alias(libs.plugins.jetbrainsKotlinAndroid)
-//    kotlin("kapt")
-//    alias(libs.plugins.hiltAndroid)
     id("kotlin-android")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
@@ -101,13 +98,10 @@ dependencies {
     implementation(libs.androidx.material3.android)
     implementation (libs.androidx.material.icons.extended)
     implementation (libs.androidx.preference.ktx)
-
-
-    implementation ("androidx.room:room-ktx:2.6.1")
-    implementation ("androidx.room:room-runtime:2.6.1")
+    implementation (libs.androidx.room.ktx)
+    implementation (libs.androidx.room.runtime)
     kapt ("androidx.room:room-compiler:2.6.1")
-    //swipe
-    implementation( "me.saket.swipe:swipe:1.2.0")
+    implementation( libs.swipe)
 
 
 
