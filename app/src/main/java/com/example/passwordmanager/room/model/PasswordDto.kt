@@ -5,11 +5,11 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "saved_password_table")
-data class PasswordDto(
+ data class PasswordDto(
     @PrimaryKey
-    var accountName: String,
-    var userCredential: String,
-    var password: String,
+    val accountName: String,
+    val userCredential: String,
+    val password: String,
 )
 
 
