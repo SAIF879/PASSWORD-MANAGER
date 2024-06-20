@@ -21,7 +21,8 @@ object PasswordManagerTexts{
 
 
     @Composable
-    fun TextAsBoldHeader(text: String, color: Color = White, size : Int = 32, maxLines: Int = 1){
+    fun TextAsBoldHeader(text: String, color: Color = White, size : Int = 32, maxLines: Int = 1 ,
+                         modifier: Modifier=Modifier){
         Text(text = text, style = TextStyle(
             fontFamily = FontFamily.Monospace,
             fontSize = size.sp,

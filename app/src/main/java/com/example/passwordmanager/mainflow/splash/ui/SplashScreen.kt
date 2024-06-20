@@ -42,7 +42,7 @@ fun Splashscreen(navController: NavController,) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-            PasswordManagerTexts.TextAsBoldHeader(text = "Splash")
+            PasswordManagerTexts.TextAsBoldHeader(text = "Password Manager")
         }
     }
 
