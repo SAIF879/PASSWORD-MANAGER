@@ -91,7 +91,7 @@ fun InputButton(
 @Composable
 fun NewPasswordButton(
     modifier: Modifier=Modifier,
-    onClick: () -> Unit = {}
+    onClick:   () -> Unit = {}
 ) {
     Button(onClick = { onClick.invoke() }, modifier = modifier
         .width(70.dp)
