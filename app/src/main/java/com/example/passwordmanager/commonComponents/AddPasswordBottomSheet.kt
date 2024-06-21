@@ -49,7 +49,7 @@ fun BottomSheet(onDismiss: () -> Unit, passwordViewModel: HomeViewModel) {
             ) {
 
 
-                GenerateInputBox(detailText = accountName, placeHolder = "Account Name")
+                GenerateInputBox(detailText = accountName, placeHolder = "Account Name" )
                 GenerateInputBox(detailText = userCredential, placeHolder = "Username/ Email")
                 GenerateInputBox(detailText = password, placeHolder = "Password")
 

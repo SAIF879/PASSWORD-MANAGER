@@ -29,13 +29,14 @@ import com.example.passwordmanager.ui.theme.MatteRed
 fun EditPassWordBottomSheet(
     onDismiss: () -> Unit,
     passwordDto: PasswordDto,
-    onDelete : () -> Unit = {},
-
+    onDelete: () -> Unit = {},
+    onUpdate: (PasswordDto) -> Unit
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState()
     var accountName = remember { mutableStateOf(passwordDto.accountName) }
     var userCredential = remember { mutableStateOf(passwordDto.userCredential) }
     var password = remember { mutableStateOf(passwordDto.password) }
+    var isEnabled by remember { mutableStateOf(false) }
 
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
@@ -54,9 +55,9 @@ fun EditPassWordBottomSheet(
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                GenerateInputBox(detailText = accountName, placeHolder = "Account Name")
-                GenerateInputBox(detailText = userCredential, placeHolder = "Username/ Email")
-                GenerateInputBox(detailText = password, placeHolder = "Password")
+                GenerateInputBox(detailText = accountName, placeHolder = "Account Name", enabled = isEnabled)
+                GenerateInputBox(detailText = userCredential, placeHolder = "Username/ Email", enabled = isEnabled)
+                GenerateInputBox(detailText = password, placeHolder = "Password", enabled = isEnabled)
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -65,11 +66,20 @@ fun EditPassWordBottomSheet(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    InputButton(text = "Edit", color = MatteBlack) {
-                        // Handle Edit logic
+                    if (!isEnabled) {
+                        InputButton(text = "Edit", color = MatteBlack) {
+                            isEnabled = true
+                        }
+                    } else {
+                        InputButton(text = "Save", color = MatteBlack) {
+                            onUpdate(PasswordDto(accountName.value, userCredential.value,
+                                password.value))
+                            isEnabled = false
+                        }
                     }
+
                     InputButton(text = "Delete", color = MatteRed) {
-                        onDelete.invoke();
+                        onDelete.invoke()
                     }
                 }
             }

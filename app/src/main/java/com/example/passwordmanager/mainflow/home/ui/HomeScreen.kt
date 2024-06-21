@@ -17,7 +17,7 @@ import com.example.passwordmanager.room.model.PasswordDto
 import com.example.passwordmanager.ui.theme.BackGroundColor
 import com.example.passwordmanager.ui.theme.MatteBlack
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
     val context = LocalContext.current
@@ -37,10 +37,13 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
             onDismiss = { showEditSheet = false },
             passwordDto = selectedPassword!!,
             onDelete = {
-               homeViewModel.deletePassword(selectedPassword!!)
-                showEditSheet =false
-           }
-
+                homeViewModel.deletePassword(selectedPassword!!)
+                showEditSheet = false
+            },
+            onUpdate = { updatedPassword ->
+                homeViewModel.updatePassword(updatedPassword)
+                showEditSheet = false
+            }
         )
     }
 
@@ -84,7 +87,6 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
                                 showEditSheet = true
                             }
                         )
-
                     }
                 }
             }
@@ -106,3 +108,4 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
         }
     }
 }
+

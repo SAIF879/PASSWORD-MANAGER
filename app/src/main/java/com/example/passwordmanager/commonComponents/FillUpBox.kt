@@ -129,13 +129,13 @@ fun GenerateFillUpBox(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun GenerateInputBox(
-    detailText : MutableState<String>,
-    placeHolder : String,
+    detailText: MutableState<String>,
+    placeHolder: String,
     enabled: Boolean = true,
-){
+) {
     OutlinedTextField(
         value = detailText.value,
         label = { Text(text = placeHolder) },
@@ -145,9 +145,7 @@ fun GenerateInputBox(
         modifier = Modifier
             .fillMaxWidth()
             .height(80.dp)
-            .padding(20.dp, 10.dp)
-           ,
-
-
+            .padding(20.dp, 10.dp),
+        enabled = enabled
     )
 }
