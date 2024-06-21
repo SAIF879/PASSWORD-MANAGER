@@ -13,7 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -54,8 +57,10 @@ fun GenerateFillUpBox(
     Column() {
         Box(
             modifier = modifier
-                .fillMaxWidth().clickable { onClick.invoke() }
-                .height(80.dp).padding(20.dp , 10.dp)
+                .fillMaxWidth()
+                .clickable { onClick.invoke() }
+                .height(80.dp)
+                .padding(20.dp, 10.dp)
                 .border(1.dp, LightGrey, shape = RoundedCornerShape(10.dp)),
             contentAlignment = Alignment.Center
         ) {
@@ -122,4 +127,27 @@ fun GenerateFillUpBox(
             )
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun GenerateInputBox(
+    detailText : MutableState<String>,
+    placeHolder : String,
+    enabled: Boolean = true,
+){
+    OutlinedTextField(
+        value = detailText.value,
+        label = { Text(text = placeHolder) },
+        onValueChange = {
+            detailText.value = it
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(80.dp)
+            .padding(20.dp, 10.dp)
+           ,
+
+
+    )
 }

@@ -100,7 +100,7 @@ dependencies {
     implementation (libs.androidx.preference.ktx)
     implementation (libs.androidx.room.ktx)
     implementation (libs.androidx.room.runtime)
-    kapt ("androidx.room:room-compiler:2.6.1")
+    kapt (libs.androidx.room.compiler)
     implementation( libs.swipe)
 
 

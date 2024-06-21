@@ -49,7 +49,7 @@ fun SwipeablePasswordCard(
     )
 
     SwipeableActionsBox(endActions = listOf(deleteAction), swipeThreshold = 150.dp) {
-        ItemPassword(heading , placeholder, onClick = onClick)
+        ItemPassword(heading , placeholder, onClick = { onClick.invoke() })
     }
 }
 @Preview

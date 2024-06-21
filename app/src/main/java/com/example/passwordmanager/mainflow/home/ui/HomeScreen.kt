@@ -23,12 +23,18 @@ import kotlinx.coroutines.launch
 fun HomeScreen(passwordViewModel: HomeViewModel = hiltViewModel()) {
     val context = LocalContext.current
     var showSheet by remember { mutableStateOf(false) }
+    var showEditSheet by remember { mutableStateOf(false) }
 
     if (showSheet) {
         BottomSheet(
             onDismiss = { showSheet = false },
             passwordViewModel = passwordViewModel
         )
+    }
+
+    if (showEditSheet) {
+        EditPassWordBottomSheet(onDismiss = { showEditSheet = false },
+            passwordViewModel = passwordViewModel)
     }
 
     val passwords by passwordViewModel.passwords.collectAsState()
@@ -62,9 +68,8 @@ fun HomeScreen(passwordViewModel: HomeViewModel = hiltViewModel()) {
                     items(passwords) { item ->
                         SwipeablePasswordCard( heading = item.accountName ,
                             placeholder = "******",
-                            onDelete = { passwordViewModel.deletePassword(item)}) {
-
-                        }
+                            onDelete = { passwordViewModel.deletePassword(item)} ,
+                            onClick = {showEditSheet = true})
                     }
                 }
             }
@@ -72,7 +77,8 @@ fun HomeScreen(passwordViewModel: HomeViewModel = hiltViewModel()) {
                 .fillMaxWidth()
                 .weight(0.1f)
                 .padding(10.dp)) {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                Row(modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End) {
                     NewPasswordButton {
                         showSheet = true
                     }
