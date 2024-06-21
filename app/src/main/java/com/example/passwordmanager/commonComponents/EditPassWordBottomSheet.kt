@@ -28,8 +28,9 @@ import com.example.passwordmanager.ui.theme.MatteRed
 @Composable
 fun EditPassWordBottomSheet(
     onDismiss: () -> Unit,
-    passwordViewModel: HomeViewModel,
-    passwordDto: PasswordDto
+    passwordDto: PasswordDto,
+    onDelete : () -> Unit = {},
+
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState()
     var accountName = remember { mutableStateOf(passwordDto.accountName) }
@@ -68,7 +69,7 @@ fun EditPassWordBottomSheet(
                         // Handle Edit logic
                     }
                     InputButton(text = "Delete", color = MatteRed) {
-                        // Handle Delete logic
+                        onDelete.invoke();
                     }
                 }
             }

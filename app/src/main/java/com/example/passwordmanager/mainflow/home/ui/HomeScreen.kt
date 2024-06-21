@@ -16,12 +16,10 @@ import com.example.passwordmanager.mainflow.home.util.HomeViewModel
 import com.example.passwordmanager.room.model.PasswordDto
 import com.example.passwordmanager.ui.theme.BackGroundColor
 import com.example.passwordmanager.ui.theme.MatteBlack
-import com.example.passwordmanager.utils.extentions.showToast
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(passwordViewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
     val context = LocalContext.current
     var showSheet by remember { mutableStateOf(false) }
     var showEditSheet by remember { mutableStateOf(false) }
@@ -30,19 +28,23 @@ fun HomeScreen(passwordViewModel: HomeViewModel = hiltViewModel()) {
     if (showSheet) {
         BottomSheet(
             onDismiss = { showSheet = false },
-            passwordViewModel = passwordViewModel
+            passwordViewModel = homeViewModel
         )
     }
 
     if (showEditSheet && selectedPassword != null) {
         EditPassWordBottomSheet(
             onDismiss = { showEditSheet = false },
-            passwordViewModel = passwordViewModel,
-            passwordDto = selectedPassword!!
+            passwordDto = selectedPassword!!,
+            onDelete = {
+               homeViewModel.deletePassword(selectedPassword!!)
+                showEditSheet =false
+           }
+
         )
     }
 
-    val passwords by passwordViewModel.passwords.collectAsState()
+    val passwords by homeViewModel.passwords.collectAsState()
 
     Column(
         modifier = Modifier
@@ -76,7 +78,7 @@ fun HomeScreen(passwordViewModel: HomeViewModel = hiltViewModel()) {
                         SwipeablePasswordCard(
                             heading = item.accountName,
                             placeholder = "******",
-                            onDelete = { passwordViewModel.deletePassword(item) },
+                            onDelete = { homeViewModel.deletePassword(item) },
                             onClick = {
                                 selectedPassword = item
                                 showEditSheet = true
