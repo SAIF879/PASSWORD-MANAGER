@@ -20,23 +20,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.passwordmanager.mainflow.home.util.HomeViewModel
+import com.example.passwordmanager.room.model.PasswordDto
 import com.example.passwordmanager.ui.theme.MatteBlack
 import com.example.passwordmanager.ui.theme.MatteRed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditPassWordBottomSheet(onDismiss: () -> Unit, passwordViewModel: HomeViewModel) {
+fun EditPassWordBottomSheet(
+    onDismiss: () -> Unit,
+    passwordViewModel: HomeViewModel,
+    passwordDto: PasswordDto
+) {
     val modalBottomSheetState = rememberModalBottomSheetState()
-    var accountName = remember { mutableStateOf("") }
-    var userCredential = remember { mutableStateOf("") }
-    var password = remember { mutableStateOf("") }
+    var accountName = remember { mutableStateOf(passwordDto.accountName) }
+    var userCredential = remember { mutableStateOf(passwordDto.userCredential) }
+    var password = remember { mutableStateOf(passwordDto.password) }
 
     ModalBottomSheet(
-    onDismissRequest = { onDismiss() },
-    sheetState = modalBottomSheetState,
-    dragHandle = { BottomSheetDefaults.DragHandle() },
-    containerColor = Color.White,
-    scrimColor = Color.Black.copy(alpha = .5f),
+        onDismissRequest = { onDismiss() },
+        sheetState = modalBottomSheetState,
+        dragHandle = { BottomSheetDefaults.DragHandle() },
+        containerColor = Color.White,
+        scrimColor = Color.Black.copy(alpha = .5f),
     ) {
         Box(
             modifier = Modifier
@@ -48,27 +53,23 @@ fun EditPassWordBottomSheet(onDismiss: () -> Unit, passwordViewModel: HomeViewMo
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-
-
-                GenerateFillUpBox(detailText = accountName, placeHolder = "Account Name")
-                GenerateFillUpBox(detailText = userCredential, placeHolder = "Username/ Email")
-//                GenerateFillUpBox(detailText = password, placeHolder = "Password")
-                GenerateFillUpBox(detailText = password, placeHolder ="Password" )
+                GenerateInputBox(detailText = accountName, placeHolder = "Account Name")
+                GenerateInputBox(detailText = userCredential, placeHolder = "Username/ Email")
+                GenerateInputBox(detailText = password, placeHolder = "Password")
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-
-                Row(modifier = Modifier.fillMaxWidth() ,
-                    verticalAlignment = Alignment.CenterVertically ,
-                    horizontalArrangement = Arrangement.SpaceAround) {
-
-                    InputButton(text = "Edit", color = MatteBlack  ){
-
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    InputButton(text = "Edit", color = MatteBlack) {
+                        // Handle Edit logic
                     }
-                    InputButton(text = "Delete", color = MatteRed ){
-
+                    InputButton(text = "Delete", color = MatteRed) {
+                        // Handle Delete logic
                     }
-
                 }
             }
         }

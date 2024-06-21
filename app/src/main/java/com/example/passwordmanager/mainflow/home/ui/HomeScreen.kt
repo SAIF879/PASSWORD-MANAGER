@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.passwordmanager.commonComponents.*
 import com.example.passwordmanager.mainflow.home.util.HomeViewModel
+import com.example.passwordmanager.room.model.PasswordDto
 import com.example.passwordmanager.ui.theme.BackGroundColor
 import com.example.passwordmanager.ui.theme.MatteBlack
 import com.example.passwordmanager.utils.extentions.showToast
@@ -24,6 +25,7 @@ fun HomeScreen(passwordViewModel: HomeViewModel = hiltViewModel()) {
     val context = LocalContext.current
     var showSheet by remember { mutableStateOf(false) }
     var showEditSheet by remember { mutableStateOf(false) }
+    var selectedPassword by remember { mutableStateOf<PasswordDto?>(null) }
 
     if (showSheet) {
         BottomSheet(
@@ -32,9 +34,12 @@ fun HomeScreen(passwordViewModel: HomeViewModel = hiltViewModel()) {
         )
     }
 
-    if (showEditSheet) {
-        EditPassWordBottomSheet(onDismiss = { showEditSheet = false },
-            passwordViewModel = passwordViewModel)
+    if (showEditSheet && selectedPassword != null) {
+        EditPassWordBottomSheet(
+            onDismiss = { showEditSheet = false },
+            passwordViewModel = passwordViewModel,
+            passwordDto = selectedPassword!!
+        )
     }
 
     val passwords by passwordViewModel.passwords.collectAsState()
@@ -53,9 +58,11 @@ fun HomeScreen(passwordViewModel: HomeViewModel = hiltViewModel()) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.size(30.dp))
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .weight(0.8f)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.8f)
+            ) {
                 PasswordManagerTexts.TextAsBoldHeader(
                     text = "Password Manager",
                     color = MatteBlack,
@@ -66,19 +73,29 @@ fun HomeScreen(passwordViewModel: HomeViewModel = hiltViewModel()) {
                 HorizontalDivider()
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(passwords) { item ->
-                        SwipeablePasswordCard( heading = item.accountName ,
+                        SwipeablePasswordCard(
+                            heading = item.accountName,
                             placeholder = "******",
-                            onDelete = { passwordViewModel.deletePassword(item)} ,
-                            onClick = {showEditSheet = true})
+                            onDelete = { passwordViewModel.deletePassword(item) },
+                            onClick = {
+                                selectedPassword = item
+                                showEditSheet = true
+                            }
+                        )
+
                     }
                 }
             }
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .weight(0.1f)
-                .padding(10.dp)) {
-                Row(modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.1f)
+                    .padding(10.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
                     NewPasswordButton {
                         showSheet = true
                     }
