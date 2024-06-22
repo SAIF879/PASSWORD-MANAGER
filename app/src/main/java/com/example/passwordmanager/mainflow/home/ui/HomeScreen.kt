@@ -82,7 +82,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
                 Spacer(modifier = Modifier.size(30.dp))
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(passwords) { item ->
-                    ItemPassword(heading = item.password, placeholder ="******" ){
+                    ItemPassword(heading = item.accountName, placeholder ="******" ){
                         selectedPassword = item
                         showEditSheet = true
                     }
