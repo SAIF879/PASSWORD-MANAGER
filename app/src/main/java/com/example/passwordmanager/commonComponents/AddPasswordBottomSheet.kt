@@ -51,9 +51,16 @@ fun BottomSheet( passwordViewModel: HomeViewModel , context : Context,onDismiss:
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                GenerateInputBox(detailText = accountName, placeHolder = "Account Name")
-                GenerateInputBox(detailText = userCredential, placeHolder = "Username/ Email")
-                GenerateInputBox(detailText = password, placeHolder = "Password")
+                GenerateInputBox(
+                    detailText = accountName,
+                    placeHolder = "Account Name")
+                GenerateInputBox(
+                    detailText = userCredential,
+                    placeHolder = "Username/ Email")
+                GenerateInputBox(
+                    detailText = password,
+                    placeHolder = "Password" ,
+                    showIcon = true)
 
                 Spacer(modifier = Modifier.height(16.dp))
 
