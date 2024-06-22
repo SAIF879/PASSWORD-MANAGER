@@ -1,5 +1,6 @@
 package com.example.passwordmanager.commonComponents
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,13 +26,16 @@ import com.example.passwordmanager.room.model.PasswordDto
 import com.example.passwordmanager.ui.theme.MatteBlack
 import com.example.passwordmanager.ui.theme.MatteBlue
 import com.example.passwordmanager.ui.theme.MatteRed
+import com.example.passwordmanager.utils.extentions.showToast
+import com.example.passwordmanager.utils.utilityFunctions.validateInputs
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditPassWordBottomSheet(
-    onDismiss: () -> Unit,
+    context : Context,
     passwordDto: PasswordDto,
     onDelete: () -> Unit = {},
+    onDismiss: () -> Unit,
     onUpdate: (PasswordDto) -> Unit
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState()
@@ -81,9 +85,16 @@ fun EditPassWordBottomSheet(
                         }
                     } else {
                         InputButton(text = "Save", color = MatteBlack) {
-                            onUpdate(PasswordDto(accountName.value, userCredential.value,
-                                password.value))
-                            isEnabled = false
+                            val errors = validateInputs(accountName.value, userCredential.value, password.value)
+                            if (errors.isEmpty()){
+                                onUpdate(PasswordDto(accountName.value, userCredential.value,
+                                    password.value))
+                                isEnabled = false
+                            }
+                            else {
+                                errors.forEach { context.showToast( it) }
+                            }
+
                         }
                     }
 

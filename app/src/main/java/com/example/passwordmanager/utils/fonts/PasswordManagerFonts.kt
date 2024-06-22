@@ -6,7 +6,7 @@ import com.example.passwordmanager.R
 
 object PasswordManagerFonts {
     val regular= FontFamily(Font(R.font.sf_pro_regular))
-    val bold= FontFamily(Font(R.font.sf_bold))
+    val bold= FontFamily(Font(R.font.sf_pro_bold))
     val medium =FontFamily(Font(R.font.sf_pro_medium))
     val light= FontFamily(Font(R.font.sf_pro_light))
 }

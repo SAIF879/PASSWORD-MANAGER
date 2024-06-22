@@ -1,6 +1,7 @@
 package com.example.passwordmanager.commonComponents
 
 
+import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,15 +21,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.passwordmanager.mainflow.home.util.HomeViewModel
 import com.example.passwordmanager.room.model.PasswordDto
+import com.example.passwordmanager.utils.extentions.showToast
+import com.example.passwordmanager.utils.utilityFunctions.validateInputs
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheet(onDismiss: () -> Unit, passwordViewModel: HomeViewModel) {
+fun BottomSheet( passwordViewModel: HomeViewModel , context : Context,onDismiss: () -> Unit) {
     val modalBottomSheetState = rememberModalBottomSheetState()
     var accountName = remember { mutableStateOf("") }
     var userCredential = remember { mutableStateOf("") }
     var password = remember { mutableStateOf("") }
+
 
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
@@ -47,17 +51,16 @@ fun BottomSheet(onDismiss: () -> Unit, passwordViewModel: HomeViewModel) {
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-
-
-                GenerateInputBox(detailText = accountName, placeHolder = "Account Name" )
+                GenerateInputBox(detailText = accountName, placeHolder = "Account Name")
                 GenerateInputBox(detailText = userCredential, placeHolder = "Username/ Email")
                 GenerateInputBox(detailText = password, placeHolder = "Password")
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 NewAccountButton {
-                    if (accountName.value.isNotEmpty() && userCredential
-                        .value.isNotEmpty() && password.value.isNotEmpty()) {
+                    val errors = validateInputs(accountName.value, userCredential.value, password.value)
+
+                    if (errors.isEmpty()) {
                         val newPassword = PasswordDto(
                             accountName = accountName.value,
                             userCredential = userCredential.value,
@@ -65,6 +68,8 @@ fun BottomSheet(onDismiss: () -> Unit, passwordViewModel: HomeViewModel) {
                         )
                         passwordViewModel.addPassword(newPassword)
                         onDismiss() // Close the bottom sheet after adding
+                    } else {
+                        errors.forEach { context.showToast( it) }
                     }
                 }
             }

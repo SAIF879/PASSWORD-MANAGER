@@ -27,8 +27,9 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
 
     if (showSheet) {
         BottomSheet(
+            passwordViewModel = homeViewModel,
+            context= context,
             onDismiss = { showSheet = false },
-            passwordViewModel = homeViewModel
         )
     }
 
@@ -40,10 +41,12 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
                 homeViewModel.deletePassword(selectedPassword!!)
                 showEditSheet = false
             },
-            onUpdate = { updatedPassword ->
+            onUpdate = {
+                updatedPassword ->
                 homeViewModel.updatePassword(updatedPassword)
                 showEditSheet = false
-            }
+            },
+            context = context
         )
     }
 
