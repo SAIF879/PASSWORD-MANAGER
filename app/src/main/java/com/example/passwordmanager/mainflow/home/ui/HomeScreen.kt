@@ -25,6 +25,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
     var showEditSheet by remember { mutableStateOf(false) }
     var selectedPassword by remember { mutableStateOf<PasswordDto?>(null) }
 
+    val passwords by homeViewModel.passwords.collectAsState()
     if (showSheet) {
         BottomSheet(
             passwordViewModel = homeViewModel,
@@ -33,24 +34,25 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
         )
     }
 
-    if (showEditSheet && selectedPassword != null) {
-        EditPassWordBottomSheet(
-            onDismiss = { showEditSheet = false },
-            passwordDto = selectedPassword!!,
-            onDelete = {
-                homeViewModel.deletePassword(selectedPassword!!)
-                showEditSheet = false
-            },
-            onUpdate = {
-                updatedPassword ->
-                homeViewModel.updatePassword(updatedPassword)
-                showEditSheet = false
-            },
-            context = context
-        )
+    selectedPassword?.let { password ->
+        if (showEditSheet) {
+            EditPassWordBottomSheet(
+                onDismiss = { showEditSheet = false },
+                passwordDto = password,
+                onDelete = {
+                    homeViewModel.deletePassword(password)
+                    showEditSheet = false
+                },
+                onUpdate = { updatedPassword ->
+                    homeViewModel.updatePassword(updatedPassword)
+                    showEditSheet = false
+                },
+                context = context
+            )
+        }
     }
 
-    val passwords by homeViewModel.passwords.collectAsState()
+
 
     Column(
         modifier = Modifier
