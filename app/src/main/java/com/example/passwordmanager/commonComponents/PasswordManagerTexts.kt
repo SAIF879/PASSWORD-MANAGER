@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.example.passwordmanager.utils.fonts.PasswordManagerFonts
 
 object PasswordManagerTexts{
 
@@ -24,16 +25,16 @@ object PasswordManagerTexts{
     fun TextAsBoldHeader(text: String, color: Color = White, size : Int = 32, maxLines: Int = 1 ,
                          modifier: Modifier=Modifier){
         Text(text = text, style = TextStyle(
-            fontFamily = FontFamily.Monospace,
+            fontFamily = PasswordManagerFonts.bold,
             fontSize = size.sp,
             color = color
         ) , textAlign = TextAlign.Center , maxLines = maxLines)
     }
 
     @Composable
-    fun TextAsSans(text:String, color: Color = White, fontSize: Int = 15 ){
+    fun TextAsMedium(text:String, color: Color = White, fontSize: Int = 15 ){
         Text(text = text, style = TextStyle(
-            fontFamily = FontFamily.SansSerif,
+            fontFamily = PasswordManagerFonts.medium,
             fontSize = fontSize.sp,
             color = color
         ) , textAlign = TextAlign.Center ,)
@@ -43,7 +44,7 @@ object PasswordManagerTexts{
     fun TextAsDefault(text: String, color: Color = Color.Black, fontSize: Int= 12) {
         Text(
             text = text, style = TextStyle(
-                fontFamily =FontFamily.Default,
+                fontFamily =PasswordManagerFonts.regular,
                 fontSize = fontSize.sp,
                 color = color
             ), textAlign = TextAlign.Start, maxLines = 1
@@ -69,7 +70,7 @@ fun TextsPreview() {
         ) {
             PasswordManagerTexts.TextAsBoldHeader(text = "bold header")
             PasswordManagerTexts.TextAsDefault(text = "hint" , color = White)
-            PasswordManagerTexts.TextAsSans(text = "sans text")
+            PasswordManagerTexts.TextAsMedium(text = "sans text")
         }
 
     }

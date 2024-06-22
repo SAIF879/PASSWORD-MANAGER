@@ -76,24 +76,20 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
                 )
                 Spacer(modifier = Modifier.size(5.dp))
                 HorizontalDivider()
+                Spacer(modifier = Modifier.size(30.dp))
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(passwords) { item ->
-                        SwipeablePasswordCard(
-                            heading = item.accountName,
-                            placeholder = "******",
-                            onDelete = { homeViewModel.deletePassword(item) },
-                            onClick = {
-                                selectedPassword = item
-                                showEditSheet = true
-                            }
-                        )
+                    ItemPassword(heading = item.password, placeholder ="******" ){
+                        selectedPassword = item
+                        showEditSheet = true
+                    }
                     }
                 }
             }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(0.1f)
+                    .wrapContentHeight()
                     .padding(10.dp)
             ) {
                 Row(

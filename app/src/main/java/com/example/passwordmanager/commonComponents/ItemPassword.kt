@@ -11,57 +11,25 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DeleteForever
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.passwordmanager.R
-import com.example.passwordmanager.room.model.PasswordDto
 import com.example.passwordmanager.ui.theme.MatteBlack
-import com.example.passwordmanager.ui.theme.MatteRed
-import me.saket.swipe.SwipeAction
-import me.saket.swipe.SwipeableActionsBox
 
 
 @Composable
-fun SwipeablePasswordCard(
-    heading: String = "Google", placeholder: String = "*******",
-    onDelete: () -> Unit,
-    onClick: () -> Unit
-) {
-    val deleteAction = SwipeAction(
-        onSwipe = { onDelete() },
-        icon = {
-            Icon(
-                imageVector = Icons.Filled.DeleteForever,
-                contentDescription = "Delete",
-                tint = Color.White,
-                modifier = Modifier.padding(20.dp)
-            )
-        },
-        background = MatteRed
-    )
-
-    SwipeableActionsBox(endActions = listOf(deleteAction), swipeThreshold = 150.dp) {
-        ItemPassword(heading , placeholder, onClick = { onClick.invoke() })
-    }
-}
-@Preview
-@Composable
-fun ItemPassword(heading: String = "Google", placeholder: String = "*******" ,
+fun ItemPassword(heading: String  , placeholder: String  ,
                  onClick: () -> Unit = {}) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(80.dp)
             .padding(10.dp)
-            .clip(RoundedCornerShape(20.dp))
+            .clip(RoundedCornerShape(25.dp))
             .clickable(onClick = onClick)
             .background(Color.White),
         contentAlignment = Alignment.Center,
@@ -70,20 +38,21 @@ fun ItemPassword(heading: String = "Google", placeholder: String = "*******" ,
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 10.dp),
+                .padding( 10.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 PasswordManagerTexts.TextAsBoldHeader(
                     text = heading,
                     color = MatteBlack,
-                    size = 20)
-                Spacer(modifier = Modifier.size(10.dp))
+                    size = 20,
+                    modifier = Modifier.align(Alignment.CenterVertically))
+                Spacer(modifier = Modifier.size(20.dp))
                 PasswordManagerTexts.TextAsBoldHeader(
                     text = placeholder,
                     color = Color.Gray,
-                    size = 20,
+                    size = 15,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
             }

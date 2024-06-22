@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.example.passwordmanager.mainflow.home.util.HomeViewModel
 import com.example.passwordmanager.room.model.PasswordDto
 import com.example.passwordmanager.ui.theme.MatteBlack
+import com.example.passwordmanager.ui.theme.MatteBlue
 import com.example.passwordmanager.ui.theme.MatteRed
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,13 +50,20 @@ fun EditPassWordBottomSheet(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(400.dp)
+                .height(450.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
+                Row(modifier = Modifier.fillMaxWidth() .padding(20.dp, 10.dp),) {
+                    PasswordManagerTexts.
+                    TextAsBoldHeader(text = "Account Details" , 
+                        color = MatteBlue , 
+                        size = 22)
+                }
+                Spacer(modifier = Modifier.size(20.dp))
                 GenerateInputBox(detailText = accountName, placeHolder = "Account Name", enabled = isEnabled)
                 GenerateInputBox(detailText = userCredential, placeHolder = "Username/ Email", enabled = isEnabled)
                 GenerateInputBox(detailText = password, placeHolder = "Password", enabled = isEnabled)
