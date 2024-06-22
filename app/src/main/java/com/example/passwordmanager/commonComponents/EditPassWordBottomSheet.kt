@@ -38,7 +38,7 @@ fun EditPassWordBottomSheet(
     passwordDto: PasswordDto,
     onDelete: () -> Unit = {},
     onDismiss: () -> Unit,
-    onUpdate: (PasswordDto) -> Unit
+    onUpdate: (PasswordDto) -> Unit = {},
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState()
     var accountName = remember { mutableStateOf(passwordDto.accountName) }
@@ -97,9 +97,11 @@ fun EditPassWordBottomSheet(
                             val errors = validateInputs(accountName.value,
                                 userCredential.value, password.value)
                             if (errors.isEmpty()){
-                                onUpdate(PasswordDto(accountName.value,
-                                    userCredential.value,
-                                    password.value))
+                                onUpdate.invoke((PasswordDto(
+                                    id = passwordDto.id,
+                                    accountName=accountName.value,
+                                    userCredential = userCredential.value,
+                                    password =  password.value)))
                                 isEnabled = false
                             }
                             else {

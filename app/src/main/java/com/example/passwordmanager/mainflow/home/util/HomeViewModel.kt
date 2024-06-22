@@ -1,5 +1,6 @@
 package com.example.passwordmanager.mainflow.home.util
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.passwordmanager.room.model.PasswordDto
@@ -37,8 +38,13 @@ class HomeViewModel @Inject constructor(
 
     fun updatePassword(passwordDto: PasswordDto) {
         viewModelScope.launch {
-            passwordRepository.updatePassword(passwordDto)
-            fetchAllPasswords()  // Refresh the list after update
+            try {
+                passwordRepository.updatePassword(passwordDto)
+                fetchAllPasswords()  // Refresh the list after update
+                Log.d("HomeViewModel", "Password updated: $passwordDto")
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "Failed to update password: $passwordDto", e)
+            }
         }
     }
 

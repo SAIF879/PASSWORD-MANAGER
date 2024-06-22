@@ -3,10 +3,8 @@ package com.example.passwordmanager.mainflow.home.util
 import android.util.Log
 import com.example.passwordmanager.room.dao.PasswordDao
 import com.example.passwordmanager.room.model.PasswordDto
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 
@@ -18,10 +16,10 @@ class HomeRepository @Inject constructor(
         try {
             emit(passwordDao.getAllPasswords())
         } catch (e: Exception) {
-            // Handle or log the exception as necessary
-            emit(emptyList<PasswordDto>())
+
+            emit(emptyList())
         }
-    }.flowOn(Dispatchers.IO)  // Ensure the flow operates on the IO dispatcher
+    }
 
     suspend fun getPassword(accountName: String): PasswordDto? {
         return try {
@@ -43,11 +41,11 @@ class HomeRepository @Inject constructor(
     suspend fun updatePassword(passwordDto: PasswordDto) {
         try {
             passwordDao.update(passwordDto)
+            Log.d("HomeRepository", "Password updated in DB: $passwordDto")
         } catch (e: Exception) {
             Log.e("DatabaseError", "Error updating password: ${e.localizedMessage}")
         }
     }
-
     suspend fun deletePassword(passwordDto: PasswordDto) {
         try {
             passwordDao.delete(passwordDto)

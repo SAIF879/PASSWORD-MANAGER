@@ -13,14 +13,13 @@ interface PasswordDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(passwordDto: PasswordDto)
-
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(passwordDto: PasswordDto)
 
     @Delete
     suspend fun delete(passwordDto: PasswordDto)
 
-    @Query("SELECT * FROM saved_password_table WHERE accountName = :accountName")
+    @Query("SELECT * FROM saved_password_table WHERE account_name = :accountName")
     suspend fun getPassword(accountName: String): PasswordDto?
 
     @Query("SELECT * FROM saved_password_table")

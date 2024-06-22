@@ -6,7 +6,7 @@ import com.example.passwordmanager.room.dao.PasswordDao
 import com.example.passwordmanager.room.model.PasswordDto
 
 
-@Database(entities = [PasswordDto::class] , version = 1, exportSchema = false)
+@Database(entities = [PasswordDto::class] , version = 2, exportSchema = false)
 abstract  class PasswordManagerDatabase : RoomDatabase() {
 abstract fun passwordDao() : PasswordDao
 }
